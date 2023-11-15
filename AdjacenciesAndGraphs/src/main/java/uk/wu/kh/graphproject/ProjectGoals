@@ -1,0 +1,17 @@
+
+Assignment
+
+We will be given a file and it contains data about
+
+Adjacencies
+
+We need to read in that file that contains a structure of connected Objects. 
+The Objects have a Number and the connection has a weight. 
+The Objects hold a information to eachother and the objects can be added, deleted or changed
+
+There’s one List containing all Objects,
+After that every connection is created with its weight
+
+
+
+The weights are not the distance!
