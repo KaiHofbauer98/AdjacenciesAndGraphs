@@ -1,16 +1,3 @@
-//<editor-fold defaultstate="collapsed" desc="This File has been generated through the creation of the Project in NetBeans IDE 19 09.11.2023">
-
-/*
-Original File Content:
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
-}
-*/
-//</editor-fold>
 /*
  * The MIT License
  *
@@ -34,13 +21,32 @@ module uk.wu.kh.graphproject {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires com.fasterxml.jackson.databind;
-    requires java.logging;
-    requires java.desktop;
+package uk.wu.kh.graphproject.filereader;
 
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import uk.wu.kh.graphproject.adjacency.Vertex;
+
+/**
+ * This interface displays the idea of how the Vertexes and Adjancies will be
+ * created through reading in from a class implementing this interface.
+ * *
+ * @see Adjancy
+ * @see Vertex
+ *
+ * @author kai.hofbauer
+ */
+public interface Reader {
+
+    /**
+     *
+     * @param file
+     * @return The complete ArrayList of Vertex objects.
+     * @throws java.io.FileNotFoundException
+     */
+    public abstract ArrayList<Vertex> readVertexFromFile(File file) throws FileNotFoundException;
+    
+    public abstract ArrayList<Vertex> readVertexFromFile(String resourceStream);
+
 }

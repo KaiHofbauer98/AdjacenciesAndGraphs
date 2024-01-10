@@ -1,2 +1,5 @@
-A;B;FF
-C;D;FFF
+ID;Weight;End;Weight;End;Weight;End
+1;5;4;55;2;;
+2;88;3;;;;
+3;81;1;;;;
+4;29;3;;;;

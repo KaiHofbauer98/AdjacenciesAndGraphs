@@ -1,16 +1,3 @@
-//<editor-fold defaultstate="collapsed" desc="This File has been generated through the creation of the Project in NetBeans IDE 19 09.11.2023">
-
-/*
-Original File Content:
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
-}
-*/
-//</editor-fold>
 /*
  * The MIT License
  *
@@ -34,13 +21,30 @@ module uk.wu.kh.graphproject {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires com.fasterxml.jackson.databind;
-    requires java.logging;
-    requires java.desktop;
+package uk.wu.kh.graphproject.constants;
 
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
+/**
+ *
+ * @author kai.hofbauer
+ */
+public enum ProjectConstantsEnum {
+
+    PROJECT_CREATOR("Kai Hofbauer"),
+    DEFAULT_JSON_FILE_LOCATION("/uk/wu/kh/graphproject/Map.JSON"),
+    DEFAULT_CSV_FILE_LOCATION("/uk/wu/kh/graphproject/CSV.csv"),
+    DEFAULT_PROJECT_WORKING_DIR_WIN(""),
+    DEFAULT_PROJECT_WORKING_DIR_MACOS(""),
+    DEFAULT_PROJECT_WORKING_DIR_LINUX(""),
+    DEFAULT_CSV_DELIMITER(";"),
+    DEFAULT_ANT_START_AGE("0"),
+    DEFAULT_MAX_ANT_AGE_ITERATIONS("30"),
+    DEFAULT_ANTHILL_SIZE("200"),
+    DEFAULT_ANTHILL_OUTPUT_RATE("3");
+
+    public final String label;
+
+    private ProjectConstantsEnum(String label) {
+        this.label = label;
+    }
+
 }

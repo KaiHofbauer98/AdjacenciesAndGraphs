@@ -3,7 +3,7 @@ Assignment
 
 We will be given a file and it contains data about
 
-Adjacencies
+Vertexes and Edges
 
 We need to read in that file that contains a structure of connected Objects. 
 The Objects have a Number and the connection has a weight. 

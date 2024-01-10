@@ -1,20 +1,7 @@
-//<editor-fold defaultstate="collapsed" desc="This File has been generated through the creation of the Project in NetBeans IDE 19 09.11.2023">
-
-/*
-Original File Content:
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
-}
-*/
-//</editor-fold>
 /*
  * The MIT License
  *
- * Copyright 2023 kai.hofbauer.
+ * Copyright 2023 kai.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,13 +21,26 @@ module uk.wu.kh.graphproject {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires com.fasterxml.jackson.databind;
-    requires java.logging;
-    requires java.desktop;
+package uk.wu.kh.graphproject.json;
 
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
+import java.util.ArrayList;
+
+/**
+ * This classes should read in the Jackson JSON objects. I found a better
+ * solution.
+ *
+ * @see JSONReader
+ * @deprecated
+ *
+ * @author kai
+ */
+
+@Deprecated
+public class Node {
+
+    public String node;
+    public String xcoord;
+    public String ycoord;
+    public ArrayList<Link> links;
+
 }

@@ -1,20 +1,7 @@
-//<editor-fold defaultstate="collapsed" desc="This File has been generated through the creation of the Project in NetBeans IDE 19 09.11.2023">
-
-/*
-Original File Content:
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
-}
-*/
-//</editor-fold>
 /*
  * The MIT License
  *
- * Copyright 2023 kai.hofbauer.
+ * Copyright 2023 kai.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,13 +21,32 @@ module uk.wu.kh.graphproject {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires com.fasterxml.jackson.databind;
-    requires java.logging;
-    requires java.desktop;
+package uk.wu.kh.graphproject;
 
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+
+/**
+ *
+ * @author kai
+ */
+public class JavaFXSimpleDialog {
+
+    /**
+     * Simple and direct displaying of relevant information to the user in a
+     * small window. The main thread will wait until the dialog window is
+     * closed!
+     *
+     * @param title
+     * @param message
+     */
+    public static void show(String title, String message) {
+        Dialog<String> dialog = new Dialog<>();
+        ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(type);
+        dialog.setTitle(title);
+        dialog.setContentText(message);
+        dialog.showAndWait();
+    }
 }

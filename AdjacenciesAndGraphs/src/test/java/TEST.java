@@ -1,16 +1,3 @@
-//<editor-fold defaultstate="collapsed" desc="This File has been generated through the creation of the Project in NetBeans IDE 19 09.11.2023">
-
-/*
-Original File Content:
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
-}
-*/
-//</editor-fold>
 /*
  * The MIT License
  *
@@ -34,13 +21,19 @@ module uk.wu.kh.graphproject {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-module uk.wu.kh.graphproject {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires com.fasterxml.jackson.databind;
-    requires java.logging;
-    requires java.desktop;
 
-    opens uk.wu.kh.graphproject to javafx.fxml;
-    exports uk.wu.kh.graphproject;
+
+
+/**
+ *
+ * @author kai.hofbauer
+ */
+public class TEST {
+
+    public static void main(String[] args) {
+        double r = 1.2;
+        int f = (int) r;
+        System.out.println(f);
+    }
+
 }
