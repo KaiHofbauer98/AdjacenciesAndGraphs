@@ -7,6 +7,7 @@ Solving a 26 city Symmetric TSP problem.
 
 
 <img width="571" alt="Problem" src="https://github.com/KaiHofbauer98/AdjacenciesAndGraphs/assets/92033660/97d42993-8c7f-4ed9-b58b-305ed0728b7f">
+![Problem](https://github.com/KaiHofbauer98/AdjacenciesAndGraphs/assets/92033660/889086e2-0441-4f7b-adc9-721e68960d42)
 
 
 Found two possible routes so far.:
