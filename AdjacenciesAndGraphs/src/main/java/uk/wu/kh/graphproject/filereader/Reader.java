@@ -26,27 +26,33 @@ package uk.wu.kh.graphproject.filereader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import uk.wu.kh.graphproject.adjacency.Vertex;
+import uk.wu.kh.graphproject.graph.Vertex;
 
 /**
  * This interface displays the idea of how the Vertexes and Adjancies will be
- * created through reading in from a class implementing this interface.
- * *
- * @see Adjancy
+ * created through reading in from a class implementing this interface. * @see
+ * Adjancy
+ *
  * @see Vertex
  *
  * @author kai.hofbauer
  */
 public interface Reader {
 
+    //TODO: IMPLEMENT
     /**
+     * Not needed and implemented yet.
      *
      * @param file
      * @return The complete ArrayList of Vertex objects.
      * @throws java.io.FileNotFoundException
      */
     public abstract ArrayList<Vertex> readVertexFromFile(File file) throws FileNotFoundException;
-    
+
+    /**
+     * @param resourceStream
+     * @return The complete ArrayList of Vertex objects.
+     */
     public abstract ArrayList<Vertex> readVertexFromFile(String resourceStream);
 
 }

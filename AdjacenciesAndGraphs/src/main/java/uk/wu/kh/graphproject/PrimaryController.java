@@ -1,21 +1,3 @@
-//<editor-fold defaultstate="collapsed" desc="This File has been generated through the creation of the Project in NetBeans IDE 19 09.11.2023">
-
-/*
-Original File Content:
-package uk.wu.kh.graphproject;
-
-import java.io.IOException;
-import javafx.fxml.FXML;
-
-public class PrimaryController {
-
-    @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
-    }
-}
- */
-//</editor-fold>
 /*
  * The MIT License
  *
@@ -43,128 +25,101 @@ package uk.wu.kh.graphproject;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
-import uk.wu.kh.graphproject.adjacency.Edge;
-import uk.wu.kh.graphproject.adjacency.Vertex;
+import uk.wu.kh.graphproject.graph.Vertex;
 import uk.wu.kh.graphproject.constants.ProjectConstants;
 import uk.wu.kh.graphproject.constants.ProjectConstantsEnum;
 import uk.wu.kh.graphproject.filereader.JSONReader;
-import uk.wu.kh.graphproject.tsp.aco.ACOController;
 import uk.wu.kh.graphproject.visualmap.visualMapBuilder;
 
+/**
+ * The controller classes work together with the FXML files in the resource
+ * folder to create, display and manage the JavaFX windows. GUI elements like
+ * buttons can be connected with a void with an @FXML tag. The GUI elements need
+ * to have the same fxmlid string like the the variables declared in the
+ * controller class to provide access.
+ * <p>
+ * The primary controller is connected to the graph view window. During its
+ * initialisation the Vertexes and Edge lists are read in from a resource file.
+ * The visualmapbuilder creates JavaFX displayable objects wich are designed to
+ * completely visualize the graph.
+ * </p>
+ *
+ * @see visualMapBuilder
+ * @see Edge
+ * @see Vertex
+ * @see FXML
+ * @author kai
+ */
 public class PrimaryController implements Initializable {
 
     @FXML
     private AnchorPane ancPane;
 
+    /**
+     * JavaFX native void in wich necessary statements take place before
+     * displaying the window to the user.
+     *
+     * @see Initializable
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-//        DoubleProperty startX = new SimpleDoubleProperty(40);
-//        DoubleProperty startY = new SimpleDoubleProperty(100);
-//        DoubleProperty endX = new SimpleDoubleProperty(300);
-//        DoubleProperty endY = new SimpleDoubleProperty(200);
-//        DoubleProperty endXX = new SimpleDoubleProperty(400);
-//        DoubleProperty endYY = new SimpleDoubleProperty(300);
-//
-//        start = new Anchor(Color.PALEGREEN, startX, startY);
-//
-//        Anchor end = new Anchor(Color.TOMATO, endX, endY);
-//        Anchor tester = new Anchor(Color.CORAL, endXX, endYY);
-//
-//        Line line = new BoundLine(startX, startY, endX, endY);
-//        Line linee = new BoundLine(endX, endY, endXX, endYY);
-//        
-//        ArrayList<Node> er = new ArrayList<>();
-//        
-//        er.add(start);
-//        er.add(end);
-//        er.add(tester);
-//        er.add(line);
-//        er.add(linee);
-        //stage.setScene(new Scene(new Group(linee, line, start, end, tester), 400, 400, Color.ALICEBLUE));
-//        ancPane.getChildren().add(new Group(er));
+        //TODO: REMOVE
+        //Old CSV testing import code. Marked for removal.
 //        CSVReader reader = new CSVReader();
 //
 //        ProjectConstants.vertexList = reader.readVertexFromFile(ProjectConstantsEnum.DEFAULT_CSV_FILE_LOCATION.label);
 //
-//        for (Vertex vertex : ProjectConstants.vertexList) {
-//            System.out.println(vertex.getUniqueId() + " . " + vertex.getAdjancyList().size());
-//
-//        }
-////        visualMapBuilder.buildMap();
-//        visualMapBuilder.build_test_map();
+//        visualMapBuilder.buildMap();
 //        ancPane.getChildren().add(new Group(ProjectConstants.visualMapList));
 //
-//        AntColonyOptimization aco = new AntColonyOptimization();
-//        aco.init();
+//
         JSONReader reader = new JSONReader();
         ProjectConstants.vertexList = reader.readVertexFromFile(ProjectConstantsEnum.DEFAULT_JSON_FILE_LOCATION.label);
 
-        for (Vertex vertex : ProjectConstants.vertexList) {
-            System.out.println(vertex.getUniqueId() + " " + vertex.getLetter() + " . " + vertex.getEdgeList().size());
-
-            for (Edge ad : vertex.getEdgeList()) {
-                System.out.println("END LETTER: " + ad.getEdgeEndVertex().getLetter());
-            }
-
-        }
-
+        //TODO: REMOVE
+        //Old method to verify consistency of read in vertexes and edges through
+        //console output.
+//        for (Vertex vertex : ProjectConstants.vertexList) {
+//            System.out.println(vertex.getUniqueId() + " " + vertex.getLetter() + " . " + vertex.getEdgeList().size());
+//
+//            for (Edge ad : vertex.getEdgeList()) {
+//                System.out.println("END LETTER: " + ad.getEdgeEndVertex().getLetter());
+//            }
+//
+//        }
         visualMapBuilder.buildMap();
+        //Makes all JavaFX objects in ProjectConstants.visualMapList visible to
+        //the user.
         ancPane.getChildren().add(new Group(ProjectConstants.visualMapList));
-
-        System.out.println("RUNNED");
-        
-        ACOController aco = new ACOController();
-        aco.init();
-        aco.runThreads();
-
     }
 
+    //TODO: Implement position-textfile save void.
+    /**
+     * Simple output of all vertex positions for storing the coordinates. Should
+     * be replaced with a position-textfile save void.
+     */
     @FXML
-    private void change_color() {
-////        start.setFill(Color.BLACK);
-//        File savefile;
-//
-//        //Adding action on the menu item
-//        savefile = App.fileSaveDialogFile();
-//
-//        try {
-//            ObjectReaderAndSaver.writeObject(savefile, ProjectConstants.vertexList);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-
+    private void printPos() {
         for (Vertex vrt : ProjectConstants.vertexList) {
             System.out.println(
                     "Id: " + vrt.getUniqueId()
-                    + " lttr: " + vrt.getLetter() +
-                            " x: " + vrt.getAnchor().centerXProperty().doubleValue() + 
-                            " y: " + vrt.getAnchor().centerYProperty().doubleValue()
+                    + " lttr: " + vrt.getLetter()
+                    + " x: " + vrt.getAnchor().centerXProperty().doubleValue()
+                    + " y: " + vrt.getAnchor().centerYProperty().doubleValue()
             );
         }
-
     }
 
     @FXML
-    private void test() {
-//        try {
-//            //        System.exit(0);
-//
-//            ObjectReaderAndSaver.readObject(App.fileOpenDialogFile());
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        } catch (ClassNotFoundException ex) {
-//            ex.printStackTrace();
-//        }
-
-        for (Edge edge : ProjectConstants.edgeList) {
-            edge.setPheromone(2);
-        }
-
+    private void close() {
+        Platform.exit();
     }
-
 }

@@ -24,13 +24,28 @@
 package uk.wu.kh.graphproject.tsp.aco.formicidae;
 
 /**
+ * The scientific latin name for ant is Formicidae it has much more attributes
+ * but in this Formicidae implementation there are just a few realted to moving
+ * bahavoiur.
  *
  * @author kai
  */
 public class Formicidae {
 
+    //TODO: IMPLEMENT FLY VOIDS
+    /**
+     * Possible fly voids in the future?
+     */
     private boolean pairOfWings;
+
+    /**
+     * Ants gender
+     */
     private final Caste caste;
+
+    /**
+     * Ants home
+     */
     private final AntHill antHill;
 
     public Formicidae(boolean pairOfWings, Caste caste, AntHill antHill) {
@@ -39,7 +54,7 @@ public class Formicidae {
         this.antHill = antHill;
     }
 
-    public boolean isPairOfWings() {
+    public boolean hasPairOfWings() {
         return pairOfWings;
     }
 

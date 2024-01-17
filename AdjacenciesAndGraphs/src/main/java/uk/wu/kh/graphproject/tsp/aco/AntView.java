@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2023 kai.
+ * Copyright 2024 kai.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,24 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.wu.kh.graphproject.rwobject;
+package uk.wu.kh.graphproject.tsp.aco;
 
-import java.io.File;
+import uk.wu.kh.graphproject.graph.Edge;
+import uk.wu.kh.graphproject.graph.Vertex;
 
 /**
+ * Combines Vertex and belonging Edge for the ant like a path with a city on the
+ * end. Allows storing routes as multiple AntViews in a List.
  *
- * Deprecated due to static implementation of the functionality of loading and 
- * saving map information in this software project. 20.12.2023
  * @author kai
- * @deprecated 
  */
-@Deprecated
-public interface ORaSInterface {
-    
-    @Deprecated
-    public abstract Object readObject(File file);
-    
-    @Deprecated
-    public abstract void writeObject(File file);
+public class AntView {
+
+    private final Vertex vertexGoal;
+    private final Edge goalEdge;
+
+    public AntView(Vertex vertex, Edge edge) {
+        this.vertexGoal = vertex;
+        this.goalEdge = edge;
+    }
+
+    public Vertex getVertexGoal() {
+        return vertexGoal;
+    }
+
+    public Edge getGoalEdge() {
+        return goalEdge;
+    }
 
 }

@@ -21,46 +21,73 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.wu.kh.graphproject.adjacency;
+package uk.wu.kh.graphproject.graph;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import uk.wu.kh.graphproject.visualmap.fxobjects.Anchor;
 
 /**
- * asd
+ * A Vertex or Node is a point in a graph where a unknown amount of edges
+ * connect.
  *
+ * https://en.wikipedia.org/wiki/Vertex_(graph_theory)
+ *
+ * @see Edge
  * @author kai.hofbauer
  */
-public class Vertex implements Serializable {
+public class Vertex {
 
+    /**
+     * For unique identification every Vertex has his own uniqueId which is an
+     * integer in this case.
+     */
     private final int uniqueId;
+
+    /**
+     * The JFX related Anchor class is used for visualization. Every Vertex
+     * object holds a reference to his own Anchor. The Anchor can be accessed
+     * over its Vertex.
+     *
+     * @see Anchor
+     */
     private Anchor anchor;
-    private String displayableInformation;
+
+    /**
+     * Every Vertex can have a unknown amount of connected edges. Therefore
+     * every Vertex has its own ArrayList of edges.
+     *
+     * @see Edge
+     */
     private ArrayList<Edge> edgeList = new ArrayList<>();
+
+    /**
+     * Variable in wich the coordinates are saved into during readig from graph
+     * file. The value is used later when creating the Anchors.
+     *
+     * @see Anchor
+     */
     private int X;
+
+    /**
+     * Variable in wich the coordinates are saved into during readig from graph
+     * file. The value is used later when creating the Anchors.
+     *
+     * @see Anchor
+     */
     private int Y;
+
+    /**
+     * The assignment includes a graph example with characters. This attribute
+     * is implemented here so every Vertex has its own character.
+     */
     private char letter;
 
     public Vertex(int uniqueId) {
         this.uniqueId = uniqueId;
     }
 
-    public Vertex(int uniqueId, String displayableInformation) {
-        this.uniqueId = uniqueId;
-        this.displayableInformation = displayableInformation;
-    }
-
     public int getUniqueId() {
         return uniqueId;
-    }
-
-    public String getDisplayableInformation() {
-        return displayableInformation;
-    }
-
-    public void setDisplayableInformation(String displayableInformation) {
-        this.displayableInformation = displayableInformation;
     }
 
     public ArrayList<Edge> getEdgeList() {
@@ -102,5 +129,4 @@ public class Vertex implements Serializable {
     public void setLetter(char letter) {
         this.letter = letter;
     }
-
 }

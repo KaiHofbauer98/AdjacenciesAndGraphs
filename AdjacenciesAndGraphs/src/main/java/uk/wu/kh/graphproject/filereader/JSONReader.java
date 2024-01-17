@@ -41,8 +41,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.wu.kh.graphproject.adjacency.Edge;
-import uk.wu.kh.graphproject.adjacency.Vertex;
+import uk.wu.kh.graphproject.JavaFXSimpleDialog;
+import uk.wu.kh.graphproject.graph.Edge;
+import uk.wu.kh.graphproject.graph.Vertex;
+import uk.wu.kh.graphproject.constants.ProjectConstantsEnum;
 
 /**
  * Literature read to accomplish the intake of a JSON file
@@ -75,42 +77,42 @@ import uk.wu.kh.graphproject.adjacency.Vertex;
  */
 public class JSONReader implements Reader {
 
-    private final ArrayList<Vertex> vertexArrayList = new ArrayList<>();
-    private Vertex localVertex;
-    private Edge localAdjancy;
+    /**
+     * Can compare two chars, A is sorted up, B is sorted down. (A=0,B=1)
+     */
+    Comparator lowerIdCharComp = new Comparator() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            return Character.compare(((Vertex) o1).getLetter(), ((Vertex) o2).getLetter());
+        }
+    };
 
-    private final ObjectMapper mapper = new ObjectMapper();
-    private String jsonString;
-    private JsonNode jsonNode = null;
-    private JsonNode nodePointer;
-    int counter;
+    /**
+     * List of Vertexes, filled up with Vertexes from JSON File.
+     */
+    private final static ArrayList<Vertex> vertexArrayList = new ArrayList<>();
+    //Needed for specific Jackson parsing
+    private static Vertex localVertex;
+    private static Edge localAdjancy;
+
+    //Jackson related values for reading the nested values out of their lists.
+    private static final ObjectMapper mapper = new ObjectMapper();
+    private static String jsonString;
+    private static JsonNode jsonNode = null;
+    private static JsonNode nodePointer;
+    private static int counter;
 
     @Override
     public ArrayList<Vertex> readVertexFromFile(String resourceStream) {
 
-//        try {
-        //Try-with resources doenst need to close the Input stream in an extra statement.
-        //The file content is stored into a String variable after successfull execution.
-//        try (InputStream stream = CSVReader.class.getResourceAsStream(resourceStream)) {
-//try (InputStream stream = CSVReader.class.getResourceAsStream("Map.JSON")) {   
-//            jsonString = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
-//        } catch (IOException ioe) {
-//            ioe.printStackTrace();
-//        }
-//        try {
-//            jsonString = new String(Files.readAllBytes(Paths.get(App.class.getResource("/uk/wu/kh/graphproject/Map.JSON").getPath())));
-//        } catch (IOException ex) {
-//            Logger.getLogger(JSONReader.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        //jsonString = ProjectConstants.ss;
-
+        //Erros occuring when using Jlink instead of JAR compilation.
         //https://stackoverflow.com/questions/54140750/java-nio-cant-read-files-from-jrt-image
         byte[] jlo = null;
+        //Solved by using JRT File System in Jlink compiled programs.
         FileSystem fs = FileSystems.getFileSystem(URI.create("jrt:/"));
         try {
-            jlo = Files.readAllBytes(fs.getPath("modules", "uk.wu.kh.graphproject", "/uk/wu/kh/graphproject/Map.JSON"));
+            jlo = Files.readAllBytes(fs.getPath("modules", ProjectConstantsEnum.PROJECT_MODULE_NAME.label, ProjectConstantsEnum.DEFAULT_JSON_FILE_LOCATION.label));
         } catch (IOException ex) {
-            Logger.getLogger(JSONReader.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (jsonString == null) {
             //Not in JRT!
@@ -132,7 +134,7 @@ public class JSONReader implements Reader {
                 jsonNode = mapper.readTree(jsonString);
             } catch (JsonProcessingException ex) {
                 Logger.getLogger(JSONReader.class.getName()).log(Level.SEVERE, null, ex);
-//                App.getDialog().show("Exception!", ex.getMessage());
+                JavaFXSimpleDialog.show("Exception!", ex.getMessage());
             }
 
             nodePointer = jsonNode.get("area");
@@ -175,19 +177,16 @@ public class JSONReader implements Reader {
         }
 
         //Sort arrayList
-        Comparator lowerIdCharComp = new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                return Character.compare(((Vertex) o1).getLetter(), ((Vertex) o2).getLetter());
-            }
-        };
-
         vertexArrayList.sort(lowerIdCharComp);
         return vertexArrayList;
 
     }
 
-    private Vertex getVertexFromLetter(char c) {
+    /**
+     * @param c
+     * @return Vertex from given char c
+     */
+    private static Vertex getVertexFromLetter(char c) {
         Vertex vertexOut = null;
         for (Vertex vertex : vertexArrayList) {
             if (vertex.getLetter() == c) {
@@ -240,7 +239,7 @@ public class JSONReader implements Reader {
      * @param json
      * @return
      */
-    public boolean isValidJSON(final String json) {
+    public static boolean isValidJSON(final String json) {
         boolean valid = false;
         try {
             jsonNode = mapper.readTree(json);
@@ -249,7 +248,7 @@ public class JSONReader implements Reader {
         } catch (JsonProcessingException e) {
             //The .readTree(json) statement was not successfully.
             //Shows information to the user.
-//            App.getDialog().show("Exception!", "The JSON file could not be verified by Jackson: ObjectMapper.readTree()");
+            JavaFXSimpleDialog.show("Exception!", "The JSON file could not be verified by Jackson: ObjectMapper.readTree()");
         }
         return valid;
     }

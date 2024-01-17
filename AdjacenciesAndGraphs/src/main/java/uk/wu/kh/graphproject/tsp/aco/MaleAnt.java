@@ -26,13 +26,16 @@ package uk.wu.kh.graphproject.tsp.aco;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.AntHill;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.Caste;
 
+//TODO: WORK ON MALE ANT
 /**
+ * The male ant has a pair of wings thats the only difference yet. Not used so
+ * far.
  *
  * @author kai
  */
 public class MaleAnt extends DigitalAnt {
 
-    public MaleAnt(AntHill antHill) {
-        super(true, Caste.MALE, antHill);
+    public MaleAnt(AntHill antHill, ACOThread acoThread) {
+        super(true, Caste.MALE, antHill, acoThread);
     }
 }

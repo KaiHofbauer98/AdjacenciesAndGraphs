@@ -24,15 +24,29 @@
 package uk.wu.kh.graphproject.tsp.aco;
 
 /**
+ * Abstraction of the life of an digital ant.
  *
  * @author kai
  */
 public interface AbstractDigitalAnt {
-    
+
+    /**
+     * The birth is initiated by the queen.
+     *
+     * @param queenAnt
+     */
     public void birth(QueenAnt queenAnt);
 
+    /**
+     * The death should remove the ant from the program.
+     */
     public void death();
-    
+
+    /**
+     * The ant should age until death().
+     *
+     * @param time_passed
+     */
     public void aging(int time_passed);
 
 }

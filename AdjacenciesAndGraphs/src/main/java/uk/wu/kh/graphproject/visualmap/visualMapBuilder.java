@@ -29,8 +29,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
-import uk.wu.kh.graphproject.adjacency.Edge;
-import uk.wu.kh.graphproject.adjacency.Vertex;
+import uk.wu.kh.graphproject.graph.Edge;
+import uk.wu.kh.graphproject.graph.Vertex;
 import uk.wu.kh.graphproject.constants.ProjectConstants;
 import uk.wu.kh.graphproject.visualmap.fxobjects.Anchor;
 import uk.wu.kh.graphproject.visualmap.fxobjects.BoundLine;
@@ -41,6 +41,7 @@ import uk.wu.kh.graphproject.visualmap.fxobjects.BoundLine;
  */
 public class visualMapBuilder {
 
+    //Needed for CSV impl.
     private static final int startX = 100;
     private static final int startY = 100;
     private static final int distanceX = 100;
@@ -70,9 +71,7 @@ public class visualMapBuilder {
             columnIndex = (ProjectConstants.visualMapList.size() - ((rowIndex - 1) * vertexDisplayableSquareSize)) + 1;
             anchorX = columnIndex * distanceX;
 
-//            if (ProjectConstants.visualMapList.size() > vertexDisplayableSquareSize) {
-//            }
-            if (!ProjectConstants.isGraphEditable && (vertex.getX() != 0) && (vertex.getY() != 0)) {
+            if (ProjectConstants.isGraphEditable && (vertex.getX() != 0) && (vertex.getY() != 0)) {
                 anchorX = vertex.getX();
                 anchorY = vertex.getY();
             }
@@ -96,18 +95,11 @@ public class visualMapBuilder {
                     + "-fx-font-style: italic;"
                     + "-fx-font-size: 16px;"
             );
-//            StackPane pane = new StackPane(anchor, text);
-//            pane.relocate(anchor.getCenterX(), anchor.getCenterY());
 
             text.xProperty().bind(anchor.centerXProperty());
             text.yProperty().bind(anchor.centerYProperty());
             Group fr = new Group(anchor, text);
 
-//            Drag.makeDraggable(text);
-//            Drag.makeDraggable(anchor);
-//            
-//            ProjectConstants.visualMapList.add(anchor);
-//            ProjectConstants.visualMapList.add(text);
             ProjectConstants.visualMapList.add(fr);
         }
 
@@ -126,7 +118,7 @@ public class visualMapBuilder {
                     );
                     edge.setBoundLine(boundLine);
                     edge.getBoundLine().setText(String.valueOf(edge.getWeight()) + "\n" + edge.getPheromone());
-                    //edge.setPheromone(edge.getPheromone());
+
                     Group lineGroup = new Group(boundLine, edge.getBoundLine().getText());
 
                     ProjectConstants.visualMapList.add(lineGroup);
@@ -159,6 +151,10 @@ public class visualMapBuilder {
         }
     }
 
+    /**
+     * Important for removing double displayed edges if two vertexes are
+     * connected twice. Leaves the list without duplicates.
+     */
     private static void removeDoubleEdges() {
 
         ArrayList<Edge> removeList = new ArrayList<>();
@@ -170,18 +166,6 @@ public class visualMapBuilder {
             }
         }
 
-//        Edge tempEdge = ProjectConstants.edgeList.get(0);
-//        System.out.println("TempEdge: " + tempEdge.getEdgeStartVertex().getLetter() + "->" + tempEdge.getEdgeEndVertex().getLetter());
-//        for (Edge edge : ProjectConstants.edgeList) {
-//            if (edge != tempEdge) {
-//                if (edge.getEdgeStartVertex() == tempEdge.getEdgeEndVertex()
-//                        && edge.getEdgeEndVertex() == tempEdge.getEdgeStartVertex()) {
-//                   
-//                    System.out.println("Edge: " + edge.getEdgeStartVertex().getLetter() + "->" + edge.getEdgeEndVertex().getLetter());
-//                }
-//                
-//            }
-//        }
         for (Edge edge : ProjectConstants.edgeList) {
             for (Edge edge1 : ProjectConstants.edgeList) {
 
@@ -231,63 +215,12 @@ public class visualMapBuilder {
         }
     }
 
-//    @Deprecated
-//    public static void build_test_map() {
-//
-//        cleanList();
-//
-//        int cnter = 2;
-//        while (cnter > 0) {
-//
-//            if (cnter == 2) {
-//                //V
-//                anchorX = 1 * 10;
-//                anchorY = 50 * 10;
-//            }
-//
-//            if (cnter == 1) {
-//                //T
-//                anchorX = 3 * 10;
-//                anchorY = 45 * 10;
-//            }
-//
-//            Anchor anchor = new Anchor(
-//                    //Color.BLUE,
-//                    Color.color(Math.random(), Math.random(), Math.random()),
-//                    new SimpleDoubleProperty(anchorX),
-//                    new SimpleDoubleProperty(anchorY));
-//
-//            anchor.setId(String.valueOf(ProjectConstants.vertexList.getLast().getUniqueId()));
-//
-//            ProjectConstants.vertexList.getLast().setCombinedAnchor(anchor);
-//
-//            System.out.println(anchorX + ", " + anchorY);
-//
-//            ProjectConstants.visualMapList.add(anchor);
-//
-//            cnter--;
-//        }
-//
-//    }
-//    private static int getSquareX() {
-//        //List size. counting the 0st element as 1 element in total!
-//        int mapLength = ProjectConstants.visualMapList.size();
-//        int squareLengthX = vertexDisplayableSquareSize;
-//
-//        while (true) {
-//
-//            if ((mapLength)) {
-//                break;
-//            }
-//            columnCounter++;
-//        }
-//
-//        return 1;
-//    }
-//
-//    private static int getSquareY() {
-//        return 2;
-//    }
+    /**
+     * Displays the Vertexes in a squarelike format if no coordinates existing.
+     *
+     * @param listLength
+     * @return
+     */
     private static int getVertexDisplayableSquareSize(int listLength) {
         //The smallest possible square is 2 by 2.
         int x = 2;
@@ -297,10 +230,8 @@ public class visualMapBuilder {
                 //The listLength fits into this x * x square!
                 break;
             }
-
             x++;
         }
-
         return x;
     }
 }

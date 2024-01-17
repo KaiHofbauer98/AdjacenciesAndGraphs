@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2023 kai.
+ * Copyright 2024 kai.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,40 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.wu.kh.graphproject.rwobject;
+package uk.wu.kh.graphproject.realRandom;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import uk.wu.kh.graphproject.JavaFXSimpleDialog;
 
 /**
- * This class contains the static program structures needed to read and write
- * the projects information to from and to a file in the users filesystem. This
- * is needed for skipping the rebuilding all information at program start.
- * Furthermore the placement of the visualisation of the Vertexes can be saved.
+ * Calls the RealRandomLoader getIntArr two times and stores the integer arrays
+ * for use in the ACO.
  *
- * @see Serializable
+ * @see RealRandomLoader
  * @author kai
  */
-public class ObjectReaderAndSaver {
+public class RandomController {
 
-    public static Object readObject(File file) throws IOException, ClassNotFoundException {
-        FileInputStream fin = new FileInputStream(file);
-        Object object;
-        try (ObjectInputStream ois = new ObjectInputStream(fin)) {
-            object = ois.readObject();
+    private static int[] two;
+    private static int[] three;
+    public static boolean inited = false;
+
+    public static void init() {
+        try {
+            //minimum, maximum, amount of requested numbers from random.org
+            three = RealRandomLoader.getIntArr(0, 2, 10000);
+            two = RealRandomLoader.getIntArr(0, 1, 5000);
+        } catch (IOException ex) {
+            JavaFXSimpleDialog.show("Error", "java.net.SocketException\nNetwork is unreachable");
+        } catch (Exception ex) {
+            Logger.getLogger(RandomController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return object;
+        System.out.println("Loaded random int array sizes: " + two.length + ", " + three.length);
     }
 
-    public static void writeObject(File file, Object object) throws IOException {
-        FileOutputStream fos = new FileOutputStream(file);
-        try (ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(object);
-        }
+    public static int[] getTwo() {
+        return two;
     }
 
+    public static int[] getThree() {
+        return three;
+    }
 }

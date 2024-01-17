@@ -26,12 +26,14 @@ package uk.wu.kh.graphproject.constants;
 import java.io.File;
 import java.util.ArrayList;
 import javafx.scene.Node;
-import uk.wu.kh.graphproject.adjacency.Edge;
-import uk.wu.kh.graphproject.adjacency.Vertex;
+import uk.wu.kh.graphproject.graph.Edge;
+import uk.wu.kh.graphproject.graph.Vertex;
+import uk.wu.kh.graphproject.realRandom.RandomController;
+import uk.wu.kh.graphproject.realRandom.RealRandomLoader;
 
 /**
  * In this class only public static objects should be stored to achieve easy and
- * consistent access to its values. They are globally needed in the project.
+ * consistent access to its values.
  *
  * @author kai
  */
@@ -39,22 +41,52 @@ public class ProjectConstants {
 
     /**
      * The file object storing the coordinates in the visual map of the Vertex
-     * and adjancies.
+     * and adjancies. (When needed not implemented jet!)
      */
     public static File VISUAL_MAP_SAVE;
 
     /**
-     * The file object which the raw unfiltered inforamtion for the Vertexes and
+     * The file object which the raw unfiltered information for the Vertexes and
      * Adjancies come from.
      */
     public static File INFO_READ_IN;
 
+    /**
+     * Holds references to all Vertexes, read in from CSV or JSON File.
+     */
     public static ArrayList<Vertex> vertexList;
 
+    /**
+     * Holds references to all Edges, read in from CSV or JSON File.
+     */
     public static ArrayList<Edge> edgeList;
 
+    /**
+     * Holds references to all JavaFX onjects needed to display the Vertexes and
+     * Edges to the user. The Node class allows adding the whole ArrayList of
+     * Node objecs to a JavaFX scene.
+     *
+     * @see Node
+     */
     public static ArrayList<Node> visualMapList;
 
-    public static boolean isGraphEditable = false;
+    /**
+     * Switches movability of Vertexes on screen. (+ dynamic scaling of Edges
+     * and labels)
+     */
+    public static boolean isGraphEditable = true;
+
+    /**
+     * Switches if ants should use random values to naivgate through the graph.
+     */
+    public static boolean randomAntBehaviour = true;
+
+    /**
+     * Switches the use of real random numbers from https://random.org
+     *
+     * @see RandomController
+     * @see RealRandomLoader
+     */
+    public static boolean useRealRandomNumbers = false;
 
 }

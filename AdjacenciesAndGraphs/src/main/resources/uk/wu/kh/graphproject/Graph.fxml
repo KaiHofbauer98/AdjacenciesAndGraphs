@@ -22,8 +22,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="Menu">
             <items>
-              <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#test" text="Close" />
-                  <MenuItem mnemonicParsing="false" onAction="#change_color" text="ChangeCol" />
+              <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#close" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#printPos" text="PrintPos." />
             </items>
           </Menu>
         </menus>

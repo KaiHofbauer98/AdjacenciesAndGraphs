@@ -23,52 +23,95 @@
  */
 package uk.wu.kh.graphproject.tsp.aco;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import uk.wu.kh.graphproject.ACOManagerController;
 import uk.wu.kh.graphproject.constants.ProjectConstantsEnum;
 
 /**
- *
+ * 
  * @author kai
  */
 public class ACOThread implements Runnable {
 
     private final DigitalAntHill digitalAntHill;
     private QueenAnt queen;
+    private boolean run = true;
 
-    public ACOThread(DigitalAntHill digitalAntHill) {
+    private final ACOManagerController acoMC;
+
+    public ACOThread(DigitalAntHill digitalAntHill, ACOManagerController acoMC) {
         this.digitalAntHill = digitalAntHill;
+        this.acoMC = acoMC;
         init();
     }
 
     private void init() {
         //Create the queen from scratch.
-        queen = new QueenAnt(digitalAntHill);
+        queen = new QueenAnt(digitalAntHill, this);
         digitalAntHill.getAntList().add(queen);
-        //Fill up the ant hill.
-        for (int i = digitalAntHill.getAntList().size(); i < Integer.parseInt(ProjectConstantsEnum.DEFAULT_ANTHILL_SIZE.label); i++) {
-            digitalAntHill.getAntList().add(queen.giveBirthtoWorker(digitalAntHill));
+        digitalAntHill.setQueen(queen);
+        //Fill up the anthill with as much ants as specified in project constants.
+        for (int i = 1; i <= Integer.parseInt(ProjectConstantsEnum.DEFAULT_ANTHILL_SIZE.label); i++) {
+            queen.giveBirthtoWorker(digitalAntHill, this);
 //            digitalAntHill.getAntList().getLast().setPosition(digitalAntHill.getVertex());
-            System.out.println(
-                    digitalAntHill.getAntList().getLast().getAge() + " " + digitalAntHill.getAntList().getLast().getPosition().getLetter()
-            );
+//            System.out.println(
+//                    digitalAntHill.getAntList().getLast().getAge() + " " + digitalAntHill.getAntList().getLast().getPosition().getLetter()
+//            );
         }
-
+        System.out.println("Anthill size: " + digitalAntHill.getAntList().size());
     }
 
     @Override
     public void run() {
-        while (digitalAntHill.getAntList().size() > 1) {
+        int counter = 0;
+        while (run && digitalAntHill.getAntList().size() > 1) {
+
+            //
+            for (int i = counter; i < counter + Integer.parseInt(ProjectConstantsEnum.DEFAULT_ANTHILL_OUTPUT_RATE.label); i++) {
+                if ((digitalAntHill.getAntList().size() - 1) >= i) {
+                    digitalAntHill.getAntList().get(i).setOutOfHill(true);
+                }
+
+            }
+            counter = counter + Integer.parseInt(ProjectConstantsEnum.DEFAULT_ANTHILL_OUTPUT_RATE.label);
+
             for (DigitalAnt digitalAnt : digitalAntHill.getAntList()) {
-                if (digitalAnt instanceof FemaleWorkerAnt) {
-                    //Female worker ant
-                    
-                    ((FemaleWorkerAnt) digitalAnt).iteration();
-                    
-                    System.out.println(FemaleWorkerAnt.class.getSimpleName());
-                }else{
-                    System.out.println(digitalAnt.getClass().getSimpleName());
+                if (run) {
+
+                    if (digitalAnt.isOutOfHill() && !digitalAnt.isDead()) {
+
+                        if (digitalAnt instanceof FemaleWorkerAnt) {
+
+                            if (Boolean.parseBoolean(ProjectConstantsEnum.DEFUALT_SLOW_DOWN_BOOLEAN.label)) {
+
+                                try {
+//                            //Female worker ant
+//
+                                    Thread.sleep(acoMC.getSlowDownMS());
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(ACOThread.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            ((FemaleWorkerAnt) digitalAnt).iteration();
+//                        System.out.println("Iterated");
+
+                            //System.out.println(FemaleWorkerAnt.class.getSimpleName());
+                        } else {
+                            //System.out.println(digitalAnt.getClass().getSimpleName());
+                        }
+                    }
                 }
             }
-            break;
         }
+        System.out.println("ENDED THREAD!");
+    }
+
+    public boolean isRun() {
+        return run;
+    }
+
+    public void setRun(boolean run) {
+        this.run = run;
     }
 }

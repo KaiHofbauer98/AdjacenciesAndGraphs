@@ -28,17 +28,20 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
-import uk.wu.kh.graphproject.adjacency.Edge;
-import uk.wu.kh.graphproject.adjacency.Vertex;
+import uk.wu.kh.graphproject.graph.Edge;
+import uk.wu.kh.graphproject.graph.Vertex;
 import uk.wu.kh.graphproject.constants.ProjectConstantsEnum;
 
 /**
+ *
+ * First implementation of a filereader. (Not used in Assignment so comments are
+ * reduced!)
  *
  * @author kai
  */
 public class CSVReader implements Reader {
 
-    private ArrayList<Vertex> vertexArrayList = new ArrayList<>();
+    private final ArrayList<Vertex> vertexArrayList = new ArrayList<>();
 
     /**
      *
@@ -50,6 +53,11 @@ public class CSVReader implements Reader {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    /**
+     *
+     * @param resourceStream
+     * @return
+     */
     @Override
     public ArrayList<Vertex> readVertexFromFile(String resourceStream) {
 
@@ -58,18 +66,12 @@ public class CSVReader implements Reader {
         String[] columnNames;
         String[] values;
         Scanner scanner = new Scanner(CSVReader.class.getResourceAsStream(resourceStream));
-//        Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine()) {
             line = scanner.nextLine();
             values = line.split(ProjectConstantsEnum.DEFAULT_CSV_DELIMITER.label);
             if (counter == 0) {
                 //The first line of the CSV Contains the column names!
-
                 columnNames = values.clone();
-//                columnNames = new String[values.length];
-//                for (int i = 0; i <= values.length; i++) {
-//                    columnNames[i] = values[i];
-//                }
             } else {
                 vertexArrayList.add(new Vertex(Integer.parseInt(values[0])));
             }

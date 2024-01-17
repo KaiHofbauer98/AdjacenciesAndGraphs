@@ -23,7 +23,7 @@
  */
 package uk.wu.kh.graphproject.tsp.aco;
 
-import uk.wu.kh.graphproject.adjacency.Vertex;
+import uk.wu.kh.graphproject.graph.Vertex;
 import uk.wu.kh.graphproject.constants.ProjectConstantsEnum;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.AntHill;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.Caste;
@@ -38,12 +38,18 @@ public class DigitalAnt extends Formicidae implements AbstractDigitalAnt {
     private int age = Integer.parseInt(ProjectConstantsEnum.DEFAULT_ANT_START_AGE.label);
     private QueenAnt mother = null;
     private Vertex position;
+    private boolean outOfHill = false;
+    private boolean dead = false;
 
-    public DigitalAnt(boolean pairOfWings, Caste caste, AntHill antHill) {
+    /**
+     * Needed for stopping the thread.
+     */
+    private final ACOThread acoThread;
+
+    public DigitalAnt(boolean pairOfWings, Caste caste, AntHill antHill, ACOThread acoThread) {
         super(pairOfWings, caste, antHill);
-        if (antHill instanceof DigitalAntHill) {
-            this.position = ((DigitalAntHill) antHill).getVertex();
-        }
+        this.position = ((DigitalAntHill) antHill).getVertex();
+        this.acoThread = acoThread;
     }
 
     public int getAge() {
@@ -70,15 +76,60 @@ public class DigitalAnt extends Formicidae implements AbstractDigitalAnt {
 
     @Override
     public void death() {
-        super.getAntHill().getAntList().remove(this);
+        //This methodcall caused the ConcurrentMofificationException!
+        //While accessing the object in a thread.
+        //super.getAntHill().getAntList().remove(this);
+        
+        this.dead = true;
+        //Checks if it is the last ant in thread.
+        lastAntInHill();
     }
 
+    /**
+     * Stops the running ACOThread as soon as possible. Route found.
+     *
+     * @see ACOThread
+     */
+    private void lastAntInHill() {
+        if (this == super.getAntHill().getAntList().getLast()) {
+            //Last ant in anthill died!
+            acoThread.setRun(false);
+        }
+    }
+
+    /**
+     * Stops the running ACOThread as soon as possible. Route found.
+     *
+     * @see ACOThread
+     */
+    public void foundRoute() {
+        acoThread.setRun(false);
+    }
+
+    /**
+     * If the ant is older than her life should be long, specified in constants,
+     * the ant dies.
+     *
+     * @param time_passed
+     */
     @Override
     public void aging(int time_passed) {
         age = age + time_passed;
         if (age > Integer.parseInt(ProjectConstantsEnum.DEFAULT_MAX_ANT_AGE_ITERATIONS.label)) {
             death();
         }
+    }
+
+    public boolean isOutOfHill() {
+        return outOfHill;
+    }
+
+    public void setOutOfHill(boolean outOfHill) {
+        this.outOfHill = outOfHill;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 
 }

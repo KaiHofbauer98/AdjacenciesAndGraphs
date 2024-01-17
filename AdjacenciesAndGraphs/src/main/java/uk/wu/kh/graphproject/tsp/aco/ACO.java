@@ -26,21 +26,35 @@ package uk.wu.kh.graphproject.tsp.aco;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.Formicidae;
 
 /**
+ * Abstraction of voids of rules for ACO from Wikipedia:
+ * 
+ * <p>
+ * Visualization of the ant colony algorithm applied to the travelling salesman
+ * problem. The green lines are the paths chosen by each ant. The blue lines are
+ * the paths it may take at each point. When the ant finishes, the pheromone
+ * levels are represented in red. It must visit each city exactly once; A
+ * distant city has less chance of being chosen (the visibility); The more
+ * intense the pheromone trail laid out on an edge between two cities, the
+ * greater the probability that that edge will be chosen; Having completed its
+ * journey, the ant deposits more pheromones on all edges it traversed, if the
+ * journey is short; After each iteration, trails of pheromones evaporate.
+ * Source: https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms
+ * </p>
  *
  * @author kai
  */
 public interface ACO {
-    
+
     abstract void visitEveryCityExactlyOnce(Formicidae formicidae);
-    
+
     abstract void chooseEdgeOnWeight(Formicidae formicidae);
-    
+
     abstract void chooseEdgeOnPheromones(Formicidae formicidae);
-    
-    abstract void depositPheromonesOnShortRoute(Formicidae formicidae);
-    
-    abstract boolean checkIfRouteIsShort(Formicidae formicidae);
-    
-    abstract void pheromoneEvaporation();
-    
+
+    abstract void depositPheromonesOnShortRoute(Formicidae formicidae);//Not fully implemented yet!
+
+    abstract boolean checkIfRouteIsShort(Formicidae formicidae);//Not implemented yet!
+
+    abstract void pheromoneEvaporation(); //Not implemented yet!
+
 }

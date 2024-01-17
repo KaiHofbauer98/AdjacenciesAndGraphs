@@ -28,18 +28,18 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 
 /**
+ * Simple and direct displaying of relevant information to the user in a small
+ * window. The calling thread will wait until the dialog window is closed!
  *
  * @author kai
  */
 public class JavaFXSimpleDialog {
 
     /**
-     * Simple and direct displaying of relevant information to the user in a
-     * small window. The main thread will wait until the dialog window is
-     * closed!
+     * Easy and direct project-wide method call.
      *
-     * @param title
-     * @param message
+     * @param title Window title
+     * @param message Message
      */
     public static void show(String title, String message) {
         Dialog<String> dialog = new Dialog<>();
@@ -47,6 +47,8 @@ public class JavaFXSimpleDialog {
         dialog.getDialogPane().getButtonTypes().add(type);
         dialog.setTitle(title);
         dialog.setContentText(message);
+        //Waits until the user acknowledged. 
+        //Async running other threads are not affected!
         dialog.showAndWait();
     }
 }

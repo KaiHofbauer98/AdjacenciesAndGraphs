@@ -24,6 +24,7 @@
 package uk.wu.kh.graphproject.tsp.aco.formicidae;
 
 /**
+ * The caste specifies only the gender of the ant in this case.
  *
  * @author kai
  */

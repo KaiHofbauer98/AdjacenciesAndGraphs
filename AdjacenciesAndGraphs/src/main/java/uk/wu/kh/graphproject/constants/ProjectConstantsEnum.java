@@ -24,25 +24,40 @@
 package uk.wu.kh.graphproject.constants;
 
 /**
+ * This enum allows easy, project wide access to important basic information
+ * about the environment and specific settings. It allows centralised settins
+ * editing to the programmer and avoids hardcoded values.
  *
  * @author kai.hofbauer
  */
 public enum ProjectConstantsEnum {
 
     PROJECT_CREATOR("Kai Hofbauer"),
+    PROJECT_MODULE_NAME("uk.wu.kh.graphproject"),
+    WRITTEN_MODULE_NAME("UNITED_KINGDOM.WREXHAM_UNIVERSITY.KAI_HOFBAUER.GRAPHPROJECT"),
+    //File resource locations
     DEFAULT_JSON_FILE_LOCATION("/uk/wu/kh/graphproject/Map.JSON"),
     DEFAULT_CSV_FILE_LOCATION("/uk/wu/kh/graphproject/CSV.csv"),
-    DEFAULT_PROJECT_WORKING_DIR_WIN(""),
-    DEFAULT_PROJECT_WORKING_DIR_MACOS(""),
-    DEFAULT_PROJECT_WORKING_DIR_LINUX(""),
+    //OS Settings
+    DEFAULT_PROJECT_WORKING_DIR_WIN(""),//Not needed yet.
+    DEFAULT_PROJECT_WORKING_DIR_MACOS(""),//Not needed yet.
+    DEFAULT_PROJECT_WORKING_DIR_LINUX(""),//Not needed yet.
     DEFAULT_CSV_DELIMITER(";"),
+    //ACO Settings
     DEFAULT_ANT_START_AGE("0"),
     DEFAULT_MAX_ANT_AGE_ITERATIONS("30"),
-    DEFAULT_ANTHILL_SIZE("200"),
-    DEFAULT_ANTHILL_OUTPUT_RATE("3");
+    DEFAULT_ANTHILL_SIZE("10000"),
+    DEFAULT_ANTHILL_OUTPUT_RATE("120"),
+    DEFUALT_SLOW_DOWN_BOOLEAN("true"),
+    DEFAULT_SLOW_DOWN_MIN_MS("1"),
+    DEFAULT_SLOW_DOWN_MAX_MS("500"),
+    DEFAULT_SLOW_DOWN_MS("50");
 
-    public final String label;
+    public String label;
 
+    /*
+    Allows accessing constant string data from constant enum names.
+     */
     private ProjectConstantsEnum(String label) {
         this.label = label;
     }

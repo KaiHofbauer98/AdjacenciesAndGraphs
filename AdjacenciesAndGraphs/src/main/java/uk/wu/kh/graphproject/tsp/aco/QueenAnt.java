@@ -27,6 +27,8 @@ import uk.wu.kh.graphproject.tsp.aco.formicidae.AntHill;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.Caste;
 
 /**
+ * The Queen gives birth to new ants. She is placed in the AntHill during
+ * DigitalAntHill creation.
  *
  * @author kai
  */
@@ -34,26 +36,28 @@ public class QueenAnt extends DigitalAnt {
 
     private DigitalAnt newAnt;
 
-    public QueenAnt(AntHill antHill) {
-        super(true, Caste.QUEEN, antHill);
+    public QueenAnt(AntHill antHill, ACOThread acoThread) {
+        super(true, Caste.QUEEN, antHill, acoThread);
     }
 
-    public FemaleWorkerAnt giveBirthtoWorker(AntHill antHill) {
-        newAnt = new FemaleWorkerAnt(antHill);
+    /**
+     * Creates new ant and specifies its anthill, mother and acoThread for
+     * thread stopping reasons.
+     *
+     * @param antHill
+     * @param acoThread
+     * @return New FemaleWorkerAnt
+     */
+    public FemaleWorkerAnt giveBirthtoWorker(AntHill antHill, ACOThread acoThread) {
+        newAnt = new FemaleWorkerAnt(antHill, acoThread);
         ((FemaleWorkerAnt) newAnt).birth(this);
         return ((FemaleWorkerAnt) newAnt);
     }
 
-    public MaleAnt giveBirthtoMaleAnt(AntHill antHill) {
-        newAnt = new MaleAnt(antHill);
+    //Not used yet.
+    public MaleAnt giveBirthtoMaleAnt(AntHill antHill, ACOThread acoThread) {
+        newAnt = new MaleAnt(antHill, acoThread);
         ((MaleAnt) newAnt).birth(this);
         return ((MaleAnt) newAnt);
     }
-
-    public QueenAnt giveBirthtoQueen(AntHill antHill) {
-        newAnt = new QueenAnt(antHill);
-        ((QueenAnt) newAnt).birth(this);
-        return ((QueenAnt) newAnt);
-    }
-
 }

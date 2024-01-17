@@ -25,8 +25,10 @@ package uk.wu.kh.graphproject.tsp.aco.formicidae;
 
 import uk.wu.kh.graphproject.tsp.aco.DigitalAnt;
 import java.util.ArrayList;
+import uk.wu.kh.graphproject.tsp.aco.QueenAnt;
 
 /**
+ * An anthill holds a reference to every ant living in it.
  *
  * @author kai
  */
@@ -34,8 +36,17 @@ public class AntHill {
 
     private final ArrayList<DigitalAnt> antList = new ArrayList<>();
 
+    private QueenAnt queen;
+
     public ArrayList<DigitalAnt> getAntList() {
         return antList;
     }
 
+    public QueenAnt getQueen() {
+        return queen;
+    }
+
+    public void setQueen(QueenAnt queen) {
+        this.queen = queen;
+    }
 }

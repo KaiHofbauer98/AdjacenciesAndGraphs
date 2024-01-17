@@ -33,25 +33,19 @@ import javafx.scene.shape.StrokeType;
 import uk.wu.kh.graphproject.constants.ProjectConstants;
 
 /**
- * a draggable anchor displayed around a point.
+ * A draggable anchor displayed around a point.
  *
- * To get the X and Y coordinates:
- *
- * anchor.getCenterX(), ancor.getCenterY()
- *
- * @author kai
+ * @author kai.hofbauer
  */
 public class Anchor extends Circle {
 
-//    private DoubleProperty doublePropertyX;
-//    private DoubleProperty doublePropertyY;
     public Anchor(Color color, DoubleProperty x, DoubleProperty y) {
         super(x.get(), y.get(), 20);
+        //Styling
         setFill(color.deriveColor(1, 1, 1, 0.8));
         setStroke(color);
         setStrokeWidth(2);
         setStrokeType(StrokeType.OUTSIDE);
-
         x.bind(centerXProperty());
         y.bind(centerYProperty());
 
@@ -60,7 +54,14 @@ public class Anchor extends Circle {
         }
     }
 
-    // make a node movable by dragging it around with the mouse.
+    /**
+     * Make a node movable by dragging it around with the mouse.
+     *
+     * <p>
+     * author Source:
+     * https://stackoverflow.com/questions/41191361/how-to-set-draggable-bounds-for-a-polygon-javafx
+     * </p>
+     */
     private void enableDrag() {
         final Delta dragDelta = new Delta();
         setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -109,7 +110,14 @@ public class Anchor extends Circle {
         });
     }
 
-    // records relative x and y co-ordinates.
+    /**
+     * Records relative x and y coordinates.
+     *
+     * <p>
+     * author Source:
+     * https://stackoverflow.com/questions/41191361/how-to-set-draggable-bounds-for-a-polygon-javafx
+     * </p>
+     */
     private class Delta {
 
         double x, y;
