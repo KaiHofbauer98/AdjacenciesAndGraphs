@@ -44,27 +44,27 @@
                     <release>21</release>
                 </configuration>
             </plugin>
-            <!--plugin>
-        <groupId>org.panteleyev</groupId>
-        <artifactId>jpackage-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <configuration>
-            <name>AdjacenciesAndGraphs</name>
-            <appVersion>1.0.0</appVersion>
-            <vendor>uk.wu.kh</vendor>
-            <destination>target/dist</destination>
-            <module>uk.wu.kh.graphproject/uk.wu.kh.graphproject.App</module>
-            <runtimeImage>target/AdjacenciesAndGraphs</runtimeImage-->
-            <!--linuxShortcut>true</linuxShortcut>
-            <linuxPackageName>AdjacenciesAndGraphs</linuxPackageName>
-            <linuxAppCategory>Utilities</linuxAppCategory>
-            <linuxMenuGroup>Utilities</linuxMenuGroup>
-            <icon>${project.basedir}/duke.png</icon-->
-            <!--javaOptions>
-                <option>-Dfile.encoding=UTF-8</option>
-            </javaOptions-->
-            <!--/configuration>
-            </plugin-->
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <name>AdjacenciesAndGraphs</name>
+                    <appVersion>1.0.0</appVersion>
+                    <vendor>uk.wu.kh</vendor>
+                    <destination>target/dist</destination>
+                    <module>uk.wu.kh.graphproject/uk.wu.kh.graphproject.App</module>
+                    <runtimeImage>target/AdjacenciesAndGraphs</runtimeImage>
+                    <!--linuxShortcut>true</linuxShortcut>
+                    <linuxPackageName>AdjacenciesAndGraphs</linuxPackageName>
+                    <linuxAppCategory>Utilities</linuxAppCategory>
+                    <linuxMenuGroup>Utilities</linuxMenuGroup>
+                    <icon>${project.basedir}/duke.png</icon-->
+                    <!--javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions-->
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
