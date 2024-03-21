@@ -1,5 +1,7 @@
 # AdjacenciesAndGraphs
 
+The project was part of our modules during Computer Science studies in Wrexham University 2023.
+
 Solving a 26 city Symmetric TSP problem.
 
 
@@ -11,7 +13,7 @@ Solving a 26 city Symmetric TSP problem.
 ![Problem](https://github.com/KaiHofbauer98/AdjacenciesAndGraphs/assets/92033660/889086e2-0441-4f7b-adc9-721e68960d42)
 
 
-Found two possible routes so far.:
+My self written software has found two possible routes so far:
 
 
 ## Routes:
