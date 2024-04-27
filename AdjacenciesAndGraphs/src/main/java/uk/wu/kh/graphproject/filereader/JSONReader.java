@@ -114,7 +114,7 @@ public class JSONReader implements Reader {
             jlo = Files.readAllBytes(fs.getPath("modules", ProjectConstantsEnum.PROJECT_MODULE_NAME.label, ProjectConstantsEnum.DEFAULT_JSON_FILE_LOCATION.label));
         } catch (IOException ex) {
         }
-        if (jsonString == null) {
+        if (jlo == null) {
             //Not in JRT!
             try (InputStream stream = CSVReader.class.getResourceAsStream(resourceStream)) {
                 jsonString = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
