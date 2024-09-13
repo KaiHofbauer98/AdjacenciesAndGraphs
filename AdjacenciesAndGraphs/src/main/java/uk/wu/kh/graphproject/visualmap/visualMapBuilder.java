@@ -34,6 +34,7 @@ import uk.wu.kh.graphproject.graph.Vertex;
 import uk.wu.kh.graphproject.constants.ProjectConstants;
 import uk.wu.kh.graphproject.visualmap.fxobjects.Anchor;
 import uk.wu.kh.graphproject.visualmap.fxobjects.BoundLine;
+import uk.wu.kh.graphproject.visualmap.fxobjects.TrackAnchor;
 
 /**
  *
@@ -84,23 +85,46 @@ public class visualMapBuilder {
             anchor.setId(String.valueOf(vertex.getUniqueId()));
 
             vertex.setAnchor(anchor);
+            
+            //---
+            
+            TrackAnchor trackanch = new TrackAnchor(
+                    //Color.BLUE,
+                    Color.WHITE,
+                    new SimpleDoubleProperty(anchorX),
+                    new SimpleDoubleProperty(anchorY),
+                    vertex);
 
+            trackanch.setId(String.valueOf(vertex.getUniqueId()));
+
+            //----
+            
             System.out.println(anchorX + ", " + anchorY);
 
             Text text = new Text(Character.toString(vertex.getLetter()));
+            Text textTrack = new Text(Character.toString(vertex.getLetter()));
             text.setBoundsType(TextBoundsType.VISUAL);
+            textTrack.setBoundsType(TextBoundsType.VISUAL);
 
             text.setStyle(
                     "-fx-font-family: \"Times New Roman\";"
                     + "-fx-font-style: italic;"
                     + "-fx-font-size: 16px;"
             );
+            textTrack.setStyle(text.getStyle());
 
             text.xProperty().bind(anchor.centerXProperty());
             text.yProperty().bind(anchor.centerYProperty());
+            
+            textTrack.xProperty().bind(trackanch.centerXProperty());
+            textTrack.yProperty().bind(trackanch.centerYProperty());
+            
             Group fr = new Group(anchor, text);
+            Group tr = new Group(trackanch, textTrack);
 
             ProjectConstants.visualMapList.add(fr);
+            ProjectConstants.visualTrackList.add(tr);
+            ProjectConstants.trackList.add(trackanch);
         }
 
         removeDoubleEdges();
@@ -120,8 +144,11 @@ public class visualMapBuilder {
                     edge.getBoundLine().setText(String.valueOf(edge.getWeight()) + "\n" + edge.getPheromone());
 
                     Group lineGroup = new Group(boundLine, edge.getBoundLine().getText());
+                    //Group lineGrouptr = new Group(boundLine, edge.getBoundLine().getText());
 
                     ProjectConstants.visualMapList.add(lineGroup);
+                    //ProjectConstants.visualTrackList.add(lineGrouptr);
+                    
                 }
             }
         }
@@ -201,9 +228,13 @@ public class visualMapBuilder {
         //Clear the list if its not empty.
         if (ProjectConstants.visualMapList == null) {
             ProjectConstants.visualMapList = new ArrayList<>();
+            ProjectConstants.visualTrackList = new ArrayList<>();
+            ProjectConstants.trackList = new ArrayList<>();
         } else {
             if (!ProjectConstants.visualMapList.isEmpty()) {
                 ProjectConstants.visualMapList.clear();
+                ProjectConstants.visualTrackList.clear();
+                ProjectConstants.trackList.clear();
             }
         }
         if (ProjectConstants.edgeList == null) {

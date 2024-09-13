@@ -25,6 +25,9 @@ package uk.wu.kh.graphproject.tsp.aco;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.paint.Color;
 import uk.wu.kh.graphproject.graph.Edge;
 import uk.wu.kh.graphproject.graph.Vertex;
 import uk.wu.kh.graphproject.constants.ProjectConstants;
@@ -32,6 +35,7 @@ import uk.wu.kh.graphproject.realRandom.RandomController;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.AntHill;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.Caste;
 import uk.wu.kh.graphproject.tsp.aco.formicidae.Formicidae;
+import uk.wu.kh.graphproject.visualmap.fxobjects.TrackAnchor;
 
 /**
  *
@@ -271,12 +275,69 @@ public class FemaleWorkerAnt extends DigitalAnt implements ACO {
             }
         }
         if (pos == this.getPosition()) {
+            if (ProjectConstants.trackAnt) {
+
+                if (getAntHill().getAntList().get(ProjectConstants.dblPrpty.intValue()) == this) {
+
+                    for (TrackAnchor trackAnch : ProjectConstants.trackList) {
+                        trackAnch.setFill(Color.WHITE);
+                    }
+
+                    ArrayList<TrackAnchor> e = new ArrayList<>();
+                    for (AntView antView : antViewList) {
+
+                        for (TrackAnchor trackAnchor : ProjectConstants.trackList) {
+                            if (antView.getVertexGoal() == trackAnchor.getVertex()) {
+                                e.add(trackAnchor);
+                            }
+                        }
+
+//                        antView.getGoalEdge().setPheromone(antView.getGoalEdge().getPheromone() - 0.001);
+                    }
+                    int i = 0;
+                    while (i <=3) {                        
+                        for (TrackAnchor trackAnchor : e) {
+                            trackAnchor.setFill(Color.WHITE);
+                        }
+                        try {
+                            Thread.sleep(250);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FemaleWorkerAnt.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        for (TrackAnchor trackAnchor : e) {
+                            trackAnchor.setFill(Color.YELLOW);
+                        }
+                        try {
+                            Thread.sleep(250);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FemaleWorkerAnt.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        i++;
+                        
+                    }
+                }
+
+            }
             for (AntView antView : antViewList) {
                 antView.getGoalEdge().setPheromone(antView.getGoalEdge().getPheromone() - 0.001);
             }
+
             this.death();
         } else {
             antViewList.getLast().getGoalEdge().setPheromone(antViewList.getLast().getGoalEdge().getPheromone() + 0.001);
+
+            if (ProjectConstants.trackAnt) {
+                if (getAntHill().getAntList().get(ProjectConstants.dblPrpty.intValue()) == this) {
+                    for (TrackAnchor trackAnch : ProjectConstants.trackList) {
+                        if (trackAnch.getVertex() == getPosition()) {
+                            trackAnch.setFill(Color.RED);
+                        } else {
+                            trackAnch.setFill(Color.WHITE);
+                        }
+                    }
+                }
+            }
+
             aging(1);
 //            System.out.println("Moves to: " + this.getPosition().getLetter());
         }

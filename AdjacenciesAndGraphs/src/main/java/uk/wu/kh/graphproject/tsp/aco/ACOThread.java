@@ -25,11 +25,14 @@ package uk.wu.kh.graphproject.tsp.aco;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.paint.Color;
 import uk.wu.kh.graphproject.ACOManagerController;
+import uk.wu.kh.graphproject.constants.ProjectConstants;
 import uk.wu.kh.graphproject.constants.ProjectConstantsEnum;
+import uk.wu.kh.graphproject.visualmap.fxobjects.TrackAnchor;
 
 /**
- * 
+ *
  * @author kai
  */
 public class ACOThread implements Runnable {
@@ -107,6 +110,30 @@ public class ACOThread implements Runnable {
         System.out.println("ENDED THREAD!");
     }
 
+    
+    @Deprecated
+    private void trackAnt(DigitalAnt ant) {
+        if (ant.isOutOfHill() && !ant.isDead()) {
+            for (TrackAnchor trackAnchor : ProjectConstants.trackList) {
+                if (trackAnchor.getVertex() == ant.getPosition()) {
+
+                    new Thread(() -> {
+                        trackAnchor.setFill(Color.RED);
+                        try {
+                            Thread.sleep((((acoMC.getSlowDownMS()) * 1000) / 2));
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(ACOThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        trackAnchor.setFill(Color.BLUE);
+                    }).start();
+
+                } else {
+                    trackAnchor.setFill(Color.BLUE);
+                }
+            }
+        }
+    }
+
     public boolean isRun() {
         return run;
     }
@@ -114,4 +141,5 @@ public class ACOThread implements Runnable {
     public void setRun(boolean run) {
         this.run = run;
     }
+    
 }

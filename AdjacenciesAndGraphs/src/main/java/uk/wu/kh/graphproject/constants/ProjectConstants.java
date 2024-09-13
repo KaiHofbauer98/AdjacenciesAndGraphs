@@ -25,11 +25,14 @@ package uk.wu.kh.graphproject.constants;
 
 import java.io.File;
 import java.util.ArrayList;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import uk.wu.kh.graphproject.graph.Edge;
 import uk.wu.kh.graphproject.graph.Vertex;
 import uk.wu.kh.graphproject.realRandom.RandomController;
 import uk.wu.kh.graphproject.realRandom.RealRandomLoader;
+import uk.wu.kh.graphproject.visualmap.fxobjects.TrackAnchor;
 
 /**
  * In this class only public static objects should be stored to achieve easy and
@@ -69,6 +72,14 @@ public class ProjectConstants {
      * @see Node
      */
     public static ArrayList<Node> visualMapList;
+    
+    public static ArrayList<Node> visualTrackList;
+    
+    public static ArrayList<TrackAnchor> trackList;
+    
+    public static boolean trackAnt = false;
+    
+    public static DoubleProperty dblPrpty = new SimpleDoubleProperty();
 
     /**
      * Switches movability of Vertexes on screen. (+ dynamic scaling of Edges

@@ -32,6 +32,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
@@ -91,8 +92,15 @@ public class ACOManagerController implements Initializable {
     private Button button_run;
     @FXML
     private Button button_downloadAndUseRealRandomNumbers;
-    //</editor-fold>
 
+    @FXML
+    private TextField trackedanttextfield;
+    @FXML
+    private CheckBox trackantcheck;
+    @FXML
+    private Slider trackantslider;
+
+    //</editor-fold>
     /**
      * @see PrimaryController
      * @param url
@@ -139,7 +147,18 @@ public class ACOManagerController implements Initializable {
         DEFAULT_ANTHILL_SIZE_TXFLD.setText(ProjectConstantsEnum.DEFAULT_ANTHILL_SIZE.label);
         DEFAULT_ANTHILL_OUTPUT_RATE_TXFLD.setText(ProjectConstantsEnum.DEFAULT_ANTHILL_OUTPUT_RATE.label);
         slowdowncheck.setSelected(Boolean.parseBoolean(ProjectConstantsEnum.DEFUALT_SLOW_DOWN_BOOLEAN.label));
-
+        
+        trackantslider.valueProperty().addListener((o) -> {
+            trackedanttextfield.setText(String.valueOf(trackantslider.valueProperty().intValue()));
+        });
+        
+        ProjectConstants.dblPrpty.bind(trackantslider.valueProperty());
+        
+//        trackedanttextfield.textProperty().bind(trackantslider.valueProperty().asString());
+        trackedanttextfield.textProperty().addListener((o) -> {
+            trackantslider.setValue(Double.valueOf(trackedanttextfield.getText()));
+        });
+        
     }
 
     /**
@@ -192,6 +211,19 @@ public class ACOManagerController implements Initializable {
         }
     }
 
+    @FXML
+    private void switchCheckBoxTrackAnts() {
+        trackantslider.setMin(1);
+        trackantslider.setMax(Integer.parseInt(DEFAULT_ANTHILL_SIZE_TXFLD.getText()));
+        trackedanttextfield.setText("1");
+        trackantslider.setDisable(!trackantcheck.isSelected());
+        trackedanttextfield.setDisable(!trackantcheck.isSelected());
+        ProjectConstants.trackAnt = trackantcheck.isSelected();
+        App.showAntTracker(trackantcheck.isSelected());
+        
+        
+    }
+
     /**
      * Needed to dynamically change the speed of the ACO to watch the algorithm
      * work.
@@ -208,6 +240,6 @@ public class ACOManagerController implements Initializable {
      */
     public void finishedThreads() {
         button_run.setDisable(false);
-    }
-
+    } 
+    
 }

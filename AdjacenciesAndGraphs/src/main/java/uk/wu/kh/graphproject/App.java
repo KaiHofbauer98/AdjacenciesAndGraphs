@@ -31,6 +31,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.stage.WindowEvent;
 //import javafx.stage.FileChooser;
@@ -49,9 +51,12 @@ import javafx.stage.WindowEvent;
 public class App extends Application {
 
     private static Scene scene_graph;
+    private static Scene scene_track_graph;
     private static Scene scene_ACOManager;
     private static Stage stage_graph;
+    private static Stage stage_track_graph;
     private static Stage stage_ACOManager;
+    private static ACOManagerController AcoMc;
 //    private static FileChooser fileChooser = new FileChooser();
     private static JavaFXSimpleDialog dialog = new JavaFXSimpleDialog();
 
@@ -90,6 +95,7 @@ public class App extends Application {
         stage_ACOManager = new Stage();
         stage_ACOManager.setScene(scene_ACOManager);
         stage_ACOManager.setTitle("Symmetric TSP Round Trip Settings");
+
         //Calling these window showing voids at the end of all initializaton!
         stage.show();
         stage_ACOManager.show();
@@ -144,5 +150,26 @@ public class App extends Application {
      */
     public static JavaFXSimpleDialog getDialog() {
         return dialog;
+    }
+
+    public static void showAntTracker(boolean show) {
+        if (show) {
+            try {
+
+                scene_track_graph = new Scene(loadFXML("Graphr"));
+                stage_track_graph = new Stage();
+                stage_track_graph.setScene(scene_track_graph);
+                stage_track_graph.setTitle("Track Graph");
+                stage_track_graph.show();
+            } catch (IOException ex) {
+                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            if (stage_track_graph != null) {
+                stage_track_graph.close();
+                stage_track_graph = null;
+                scene_track_graph = null;
+            }
+        }
     }
 }

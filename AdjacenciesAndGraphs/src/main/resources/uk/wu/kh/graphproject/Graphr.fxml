@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uk.wu.kh.graphproject.TrackGraphController">
+   <children>
+      <ScrollPane layoutY="28.0" prefHeight="837.0" prefWidth="984.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+        <content>
+          <AnchorPane fx:id="ancTrackPane" minHeight="0.0" minWidth="0.0" prefHeight="841.0" prefWidth="948.0">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <Label layoutX="7.0" prefHeight="29.0" prefWidth="79.0" text="Tracked Ant:" />
+      <Label fx:id="trackedantlabel" layoutX="86.0" layoutY="3.0" prefHeight="23.0" prefWidth="48.0" text="0" />
+   </children>
+</AnchorPane>
